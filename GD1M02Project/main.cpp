@@ -20,6 +20,8 @@
 
 #include "utils.h"
 #include "resource.h"
+#include "matrix.h"
+
 
 #define WINDOW_CLASS_NAME L"WINCLASS1"
 
@@ -135,17 +137,145 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 	LPARAM _lparam)
 {
 	static float _value;
+
+	// 2D array for the ting
+	float s_fMatrixA[3][3];
+	float s_fMatrixB[3][3];
+	float s_fMatrixR[3][3];
+
+
+
 	switch (_msg)
 	{
 	case WM_COMMAND:
 	{
 		switch (LOWORD(_wparam))
 		{
+
+
+		// THIS IS ALL FOR MATRIX A
 		case IDC_EDIT_A11:
 		{
-			_value = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			s_fMatrixA[0][0] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
 			break;
 		}
+		case IDC_EDIT_A12:
+		{
+			s_fMatrixA[1][0] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A13:
+		{
+			s_fMatrixA[2][0] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A14:
+		{
+			s_fMatrixA[3][0] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A21:
+		{
+			s_fMatrixA[0][1] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A22:
+		{
+			s_fMatrixA[1][1] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A23:
+		{
+			s_fMatrixA[2][1] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A24:
+		{
+			s_fMatrixA[3][1] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A31:
+		{
+			s_fMatrixA[0][2] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A32:
+		{
+			s_fMatrixA[1][2] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A33:
+		{
+			s_fMatrixA[2][2] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A34:
+		{
+			s_fMatrixA[3][2] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A41:
+		{
+			s_fMatrixA[0][3] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A42:
+		{
+			s_fMatrixA[1][3] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A43:
+		{
+			s_fMatrixA[2][3] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+		case IDC_EDIT_A44:
+		{
+			s_fMatrixA[3][3] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+
+
+
+		// For identity matrix tings
+		case IDOK4:
+		{
+			int row = 0;
+			int col = 0;
+			for (row = 0; row < 4; row++)
+			{
+				for (col = 0; col < 4; col++)
+				{
+					// Checking if row is equal to column  
+					if (row == col) 
+					{
+						s_fMatrixA[row][col] = 1;
+					}
+							
+					else 
+					{
+						s_fMatrixA[row][col] = 0;
+					}
+							
+				}
+				
+			}
+			
+			
+
+
+
+			//WriteToEditBox(_hwnd);
+			
+			break;
+		}
+		case IDOK8:
+		{
+			s_fMatrixA[3][3] = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+			break;
+		}
+
+
 		default:
 			break;
 		}
