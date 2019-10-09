@@ -139,9 +139,9 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 	static float _value;
 
 	// 2D array for the ting
-	float s_fMatrixA[3][3];
-	float s_fMatrixB[3][3];
-	float s_fMatrixR[3][3];
+	static float s_fMatrixA[3][3];
+	static float s_fMatrixB[3][3];
+	static float s_fMatrixR[3][3];
 
 
 
@@ -260,7 +260,7 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 				}
 				
 			}
-			
+			WriteToEditBox(_hwnd, IDC_EDIT_A11, 11);
 			
 
 

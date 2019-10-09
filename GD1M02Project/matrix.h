@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 
 
 enum matrixA {	
@@ -22,4 +22,4 @@ enum matrixR {
 	IDC_EDIT_R12, IDC_EDIT_R22, IDC_EDIT_R32, IDC_EDIT_R42,
 	IDC_EDIT_R13, IDC_EDIT_R23, IDC_EDIT_R33, IDC_EDIT_R43,
 	IDC_EDIT_R14, IDC_EDIT_R24, IDC_EDIT_R34, IDC_EDIT_R44
-};
+};*/
