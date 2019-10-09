@@ -23,6 +23,8 @@
 
 #include "utils.h"
 #include "resource.h"
+#include "matrix.h"
+
 
 #define WINDOW_CLASS_NAME L"WINCLASS1"
 
@@ -140,6 +142,10 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 {
 	//static float _value;
 	static float _values[4][4];
+
+	static float s_fMatrixA[4][4];
+	static float s_fMatrixB[4][4];
+	static float s_fMatrixR[4][4];
 
 	std::map<int, int> map;
 	std::map<int, int>::iterator it;
@@ -491,6 +497,89 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			WriteToEditBox(_hwnd, IDC_EDIT_DetA, finalDet);
 
 		}
+
+		// A + B
+		case IDOK: 
+		{
+
+			ReadFromDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					s_fMatrixR[i][j] = s_fMatrixA[i][j] + s_fMatrixB[i][j];
+
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			break;
+		}
+
+
+		// A - B
+		case IDCANCEL:
+		{
+
+			ReadFromDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					s_fMatrixR[i][j] = s_fMatrixA[i][j] - s_fMatrixB[i][j];
+
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			break;
+		}
+		// A * B
+		case IDOK2:
+		{
+			int iTemp = 0;
+
+			ReadFromDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					iTemp = 0;
+					for (int k = 0; k < 4; ++k)
+					{
+						iTemp += s_fMatrixA[i][k] * s_fMatrixB[k][j];					
+					}
+					s_fMatrixR[i][j] = iTemp;
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			break;
+		}
+
+		// B * A
+		case IDOK5:
+		{
+			int iTemp = 0;
+
+			ReadFromDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					iTemp = 0;
+					for (int k = 0; k < 4; ++k)
+					{
+						iTemp += s_fMatrixB[i][k] * s_fMatrixA[k][j];
+					}
+					s_fMatrixR[i][j] = iTemp;
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			break;
+		}
+
 
 		default:
 			break;
