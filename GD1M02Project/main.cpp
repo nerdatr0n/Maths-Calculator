@@ -380,10 +380,7 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			adjMatrix[3][2] = c * f*m - b * g*m - c * e*n + a * g*n + b * e*o - a * f*o;
 			adjMatrix[3][3] = -c * f*i + b * g*i + c * e*j - a * g*j - b * e*k + a * f*k;
 
-			//Got adj, need to do inverse
-
-			int s;
-			s++;
+			//Got adj, need to do inverse 
 			break;
 		}
 		case IDOK3:
