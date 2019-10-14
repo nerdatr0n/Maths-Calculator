@@ -1,3 +1,17 @@
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2018 Media Design School
+//
+// File Name	: matrix.h
+// Description	: the matrix file
+// Author		: Ben Zaher and David Haverland
+// Mail			: benjamin.zah8503@mediadesign.school.nz and david.hav8466@mediadesign.school.nz
+//
+
 #pragma once
 
 #include <windows.h>   // Include all the windows headers.

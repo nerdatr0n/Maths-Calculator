@@ -6,10 +6,10 @@
 //
 // (c) 2018 Media Design School
 //
-// File Name	: 
-// Description	: 
-// Author		: Your Name
-// Mail			: your.name@mediadesign.school.nz
+// File Name	: main.cpp
+// Description	: the main file
+// Author		: Ben Zaher and David Haverland
+// Mail			: benjamin.zah8503@mediadesign.school.nz and david.hav8466@mediadesign.school.nz
 //
 
 
