@@ -269,8 +269,18 @@ float determinant(HWND* _hwnd, bool isA)
 	//Get the final determinant
 	float finalDet = det1 + det2 + det3 + det4;
 
-	//Output final determinant
-	WriteToEditBox(*_hwnd, outputBox, finalDet);
+	if (finalDet == 0)
+	{
+
+		WriteToEditBox(*_hwnd, outputBox, ToWideString("no inverse"));
+
+	}
+	else
+	{
+		//Output final determinant
+		WriteToEditBox(*_hwnd, outputBox, finalDet);
+	}
+
 
 	return(finalDet);
 }
@@ -317,6 +327,9 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 		{
 
 		//BUTTONS
+
+
+
 
 		//Identity Matrix A
 		case IDOK4:
@@ -688,6 +701,43 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			break;
 		}
 
+		// random fill matrix A
+		case IDC_BUTTON1:
+		{
+
+			ReadFromDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					s_fMatrixA[i][j] = rand() % 10 + 1;
+					
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			break;
+
+		}
+
+		// random fill matrix B 
+		case IDC_BUTTON5:
+		{
+
+			ReadFromDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					s_fMatrixB[i][j] = rand() % 10 + 1;
+
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fMatrixA, s_fMatrixB, s_fMatrixR);
+			break;
+
+		}
 
 		default:
 			break;

@@ -71,6 +71,11 @@ void WriteToEditBox(HWND _hDlg, int _iResourceID, float _fValue)
 	SetDlgItemText(_hDlg, _iResourceID, _strValue.c_str());
 }
 
+void WriteToEditBox(HWND _hDlg, int _iResourceID, std::wstring _fValue)
+{
+	SetDlgItemText(_hDlg, _iResourceID, _fValue.c_str());
+}
+
 #endif    // __UTILS_H__
 
 
