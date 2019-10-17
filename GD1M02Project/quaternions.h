@@ -7,7 +7,7 @@
 #include <windowsx.h>  // Include useful macros.
 
 
-void ReadFromDialogBoxes(HWND _hwnd, float _fQuaternionA[4], float _fQuaternionB[4], float _fQuaternionR[4], float _fScalar)
+void ReadFromDialogBoxes(HWND _hwnd, float _fQuaternionA[4], float _fQuaternionB[4], float _fQuaternionR[4], float& _fScalar)
 {
 	// For quaternion A
 	_fQuaternionA[0] = ReadFromEditBox(_hwnd, IDC_EDIT1);

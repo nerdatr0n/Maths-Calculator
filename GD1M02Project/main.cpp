@@ -875,11 +875,22 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 
 
-			s_fQuaternionR[0] = (s_fQuaternionA[1] * s_fQuaternionB[1]) - (s_fQuaternionA[2] * s_fQuaternionB[2]) - (s_fQuaternionA[3] * s_fQuaternionB[3]) - (s_fQuaternionA[4] * s_fQuaternionB[0]);
-			s_fQuaternionR[1] = (s_fQuaternionA[1] * s_fQuaternionB[2]) + (s_fQuaternionA[2] * s_fQuaternionB[1]) + (s_fQuaternionA[3] * s_fQuaternionB[0]) - (s_fQuaternionA[4] * s_fQuaternionB[3]);
-			s_fQuaternionR[2] = (s_fQuaternionA[1] * s_fQuaternionB[3]) - (s_fQuaternionA[2] * s_fQuaternionB[0]) + (s_fQuaternionA[3] * s_fQuaternionB[1]) + (s_fQuaternionA[4] * s_fQuaternionB[2]);
-			s_fQuaternionR[3] = (s_fQuaternionA[1] * s_fQuaternionB[0]) + (s_fQuaternionA[2] * s_fQuaternionB[3]) - (s_fQuaternionA[3] * s_fQuaternionB[2]) + (s_fQuaternionA[4] * s_fQuaternionB[1]);
-		
+			float& w1 = s_fQuaternionA[3];
+			float& x1 = s_fQuaternionA[0];
+			float& y1 = s_fQuaternionA[1];
+			float& z1 = s_fQuaternionA[2];
+
+			float& w2 = s_fQuaternionB[3];
+			float& x2 = s_fQuaternionB[0];
+			float& y2 = s_fQuaternionB[1];
+			float& z2 = s_fQuaternionB[2];
+
+
+			s_fQuaternionR[0] = x1 * w2 + y1 * z2 - z1 * y2 + w1 * x2; //x
+			s_fQuaternionR[1] = -x1 * z2 + y1 * w2 + z1 * x2 + w1 * y2; //y
+			s_fQuaternionR[2] = x1 * y2 - y1 * x2 + z1 * w2 + w1 * z2; //z
+			s_fQuaternionR[3] = -x1 * x2 - y1 * y2 - z1 * z2 + w1 * w2; //w
+
 
 			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 
@@ -892,11 +903,21 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 		{
 			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 
+			float& w1 = s_fQuaternionB[3];
+			float& x1 = s_fQuaternionB[0];
+			float& y1 = s_fQuaternionB[1];
+			float& z1 = s_fQuaternionB[2];
 
-			s_fQuaternionR[0] = (s_fQuaternionB[1] * s_fQuaternionA[1]) - (s_fQuaternionB[2] * s_fQuaternionA[2]) - (s_fQuaternionB[3] * s_fQuaternionA[3]) - (s_fQuaternionB[4] * s_fQuaternionA[0]);
-			s_fQuaternionR[1] = (s_fQuaternionB[1] * s_fQuaternionA[2]) + (s_fQuaternionB[2] * s_fQuaternionA[1]) + (s_fQuaternionB[3] * s_fQuaternionA[0]) - (s_fQuaternionB[4] * s_fQuaternionA[3]);
-			s_fQuaternionR[2] = (s_fQuaternionB[1] * s_fQuaternionA[3]) - (s_fQuaternionB[2] * s_fQuaternionA[0]) + (s_fQuaternionB[3] * s_fQuaternionA[1]) + (s_fQuaternionB[4] * s_fQuaternionA[2]);
-			s_fQuaternionR[3] = (s_fQuaternionB[1] * s_fQuaternionA[0]) + (s_fQuaternionB[2] * s_fQuaternionA[3]) - (s_fQuaternionB[3] * s_fQuaternionA[2]) + (s_fQuaternionB[4] * s_fQuaternionA[1]);
+			float& w2 = s_fQuaternionA[3];
+			float& x2 = s_fQuaternionA[0];
+			float& y2 = s_fQuaternionA[1];
+			float& z2 = s_fQuaternionA[2];
+
+
+			s_fQuaternionR[0] = x1 * w2 + y1 * z2 - z1 * y2 + w1 * x2; //x
+			s_fQuaternionR[1] = -x1 * z2 + y1 * w2 + z1 * x2 + w1 * y2; //y
+			s_fQuaternionR[2] = x1 * y2 - y1 * x2 + z1 * w2 + w1 * z2; //z
+			s_fQuaternionR[3] = -x1 * x2 - y1 * y2 - z1 * z2 + w1 * w2; //w
 
 
 			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
@@ -908,18 +929,51 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 		// a dot b
 		case IDC_BUTTON8:
 		{
+
+			s_fScalar = s_fQuaternionA[0] * s_fQuaternionB[0] + s_fQuaternionA[1] * s_fQuaternionB[1] + s_fQuaternionA[2] * s_fQuaternionB[2] + s_fQuaternionA[3] * s_fQuaternionB[3];
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 			break;
 		}
 
 		// a*
 		case IDC_BUTTON3:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			float& w1 = s_fQuaternionA[3];
+			float& x1 = s_fQuaternionA[0];
+			float& y1 = s_fQuaternionA[1];
+			float& z1 = s_fQuaternionA[2];
+
+			s_fQuaternionR[0] = -x1; //x
+			s_fQuaternionR[1] = -y1; //y
+			s_fQuaternionR[2] = -z1; //z
+			s_fQuaternionR[3] = w1; //w
+
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 			break;
 		}
 
 		// b*
 		case IDC_BUTTON9:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			float& w1 = s_fQuaternionB[3];
+			float& x1 = s_fQuaternionB[0];
+			float& y1 = s_fQuaternionB[1];
+			float& z1 = s_fQuaternionB[2];
+
+			s_fQuaternionR[0] = -x1; //x
+			s_fQuaternionR[1] = -y1; //y
+			s_fQuaternionR[2] = -z1; //z
+			s_fQuaternionR[3] = w1; //w
+
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
 			break;
 		}
 
@@ -964,24 +1018,102 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 		// a Inv
 		case IDC_BUTTON12:
 		{
+			
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			int _iTemp = 0;
+			
+			float& x1 = s_fQuaternionA[0];
+			float& y1 = s_fQuaternionA[1];
+			float& z1 = s_fQuaternionA[2];
+			float& w1 = s_fQuaternionA[3];
+
+			//|a|^2
+			for (int i = 0; i < 4; ++i)
+			{
+				_iTemp += s_fQuaternionA[i] * s_fQuaternionA[i];
+
+			}
+
+
+			// a inv
+			s_fQuaternionR[0] = (-x1) / _iTemp; //x
+			s_fQuaternionR[1] = (-y1) / _iTemp; //y
+			s_fQuaternionR[2] = (-z1) / _iTemp; //z
+			s_fQuaternionR[3] = (w1) / _iTemp; //w
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 			break;
 		}
 
 		// b Inv
 		case IDC_BUTTON13:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			int _iTemp = 0;
+
+			float& x1 = s_fQuaternionB[0];
+			float& y1 = s_fQuaternionB[1];
+			float& z1 = s_fQuaternionB[2];
+			float& w1 = s_fQuaternionB[3];
+
+			//|a|^2
+			for (int i = 0; i < 4; ++i)
+			{
+				_iTemp += s_fQuaternionB[i] * s_fQuaternionB[i];
+
+			}
+
+
+			// a inv
+			s_fQuaternionR[0] = (-x1) / _iTemp; //x
+			s_fQuaternionR[1] = (-y1) / _iTemp; //y
+			s_fQuaternionR[2] = (-z1) / _iTemp; //z
+			s_fQuaternionR[3] = (w1) / _iTemp; //w
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 			break;
 		}
 
 		// ta 
 		case IDC_BUTTON14:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			float& x = s_fQuaternionA[0];
+			float& y = s_fQuaternionA[1];
+			float& z = s_fQuaternionA[2];
+			float& w = s_fQuaternionA[3];
+			float& t = s_fScalar;
+
+			s_fQuaternionR[0] = x*t; //x
+			s_fQuaternionR[1] = y*t; //y
+			s_fQuaternionR[2] = z*t; //z
+			s_fQuaternionR[3] = w*t; //w
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 			break;
 		}
 
 		// tb
 		case IDC_BUTTON15:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			float& x = s_fQuaternionB[0];
+			float& y = s_fQuaternionB[1];
+			float& z = s_fQuaternionB[2];
+			float& w = s_fQuaternionB[3];
+			float& t = s_fScalar;
+
+			s_fQuaternionR[0] = x * t; //x
+			s_fQuaternionR[1] = y * t; //y
+			s_fQuaternionR[2] = z * t; //z
+			s_fQuaternionR[3] = w * t; //w
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
 			break;
 		}
 
