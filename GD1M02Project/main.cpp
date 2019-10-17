@@ -24,7 +24,7 @@
 #include "utils.h"
 #include "resource.h"
 #include "matrix.h"
-
+#include "quaternions.h"
 
 #define WINDOW_CLASS_NAME L"WINCLASS1"
 
@@ -807,8 +807,183 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 	LPARAM _lparam)
 {
 
+	static float s_fQuaternionA[4];
+	static float s_fQuaternionB[4];
+	static float s_fQuaternionR[4];
+
+	static float s_fScalar;
+
 	switch (_msg)
 	{
+
+	case WM_COMMAND:
+	{
+		switch (LOWORD(_wparam))
+		{
+
+		// a + b
+		case IDC_BUTTON1:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fQuaternionR[i] = s_fQuaternionA[i] + s_fQuaternionB[i];
+
+			}
+			
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+			
+			break;
+		}
+
+		// a - b
+		case IDC_BUTTON5:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fQuaternionR[i] = s_fQuaternionA[i] - s_fQuaternionB[i];
+
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			break;
+		}
+
+		// b - a
+		case IDC_BUTTON6:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fQuaternionR[i] = s_fQuaternionB[i] - s_fQuaternionA[i];
+
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			break;
+		}
+
+		// ab
+		case IDC_BUTTON2:
+		{
+			break;
+		}
+
+		// ba
+		case IDC_BUTTON7:
+		{
+			break;
+		}
+
+		// a dot b
+		case IDC_BUTTON8:
+		{
+			break;
+		}
+
+		// a*
+		case IDC_BUTTON3:
+		{
+			break;
+		}
+
+		// b*
+		case IDC_BUTTON9:
+		{
+			break;
+		}
+
+		// |a|
+		case IDC_BUTTON10:
+		{
+			break;
+		}
+
+		// |b|
+		case IDC_BUTTON11:
+		{
+			break;
+		}
+
+		// a Inv
+		case IDC_BUTTON12:
+		{
+			break;
+		}
+
+		// b Inv
+		case IDC_BUTTON13:
+		{
+			break;
+		}
+
+		// ta 
+		case IDC_BUTTON14:
+		{
+			break;
+		}
+
+		// tb
+		case IDC_BUTTON15:
+		{
+			break;
+		}
+
+		// a fill random
+		case IDC_BUTTON16:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fQuaternionA[i] = rand() % 10 + 1;
+								
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+			break;
+		}
+
+		// b fill random
+		case IDC_BUTTON17:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fQuaternionB[i] = rand() % 10 + 1;
+
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+			break;
+		}
+
+
+		// random t
+		case IDC_BUTTON18:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			s_fScalar = rand() % 10 + 1;
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+			break;
+		}
+
+
+
+		default:
+			break;
+		}
+		break;
+	}
+
 	case WM_CLOSE:
 	{
 		ShowWindow(_hwnd, SW_HIDE);
