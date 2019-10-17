@@ -872,12 +872,36 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 		// ab
 		case IDC_BUTTON2:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+
+			s_fQuaternionR[0] = (s_fQuaternionA[1] * s_fQuaternionB[1]) - (s_fQuaternionA[2] * s_fQuaternionB[2]) - (s_fQuaternionA[3] * s_fQuaternionB[3]) - (s_fQuaternionA[4] * s_fQuaternionB[0]);
+			s_fQuaternionR[1] = (s_fQuaternionA[1] * s_fQuaternionB[2]) + (s_fQuaternionA[2] * s_fQuaternionB[1]) + (s_fQuaternionA[3] * s_fQuaternionB[0]) - (s_fQuaternionA[4] * s_fQuaternionB[3]);
+			s_fQuaternionR[2] = (s_fQuaternionA[1] * s_fQuaternionB[3]) - (s_fQuaternionA[2] * s_fQuaternionB[0]) + (s_fQuaternionA[3] * s_fQuaternionB[1]) + (s_fQuaternionA[4] * s_fQuaternionB[2]);
+			s_fQuaternionR[3] = (s_fQuaternionA[1] * s_fQuaternionB[0]) + (s_fQuaternionA[2] * s_fQuaternionB[3]) - (s_fQuaternionA[3] * s_fQuaternionB[2]) + (s_fQuaternionA[4] * s_fQuaternionB[1]);
+		
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+
 			break;
 		}
 
 		// ba
 		case IDC_BUTTON7:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+
+			s_fQuaternionR[0] = (s_fQuaternionB[1] * s_fQuaternionA[1]) - (s_fQuaternionB[2] * s_fQuaternionA[2]) - (s_fQuaternionB[3] * s_fQuaternionA[3]) - (s_fQuaternionB[4] * s_fQuaternionA[0]);
+			s_fQuaternionR[1] = (s_fQuaternionB[1] * s_fQuaternionA[2]) + (s_fQuaternionB[2] * s_fQuaternionA[1]) + (s_fQuaternionB[3] * s_fQuaternionA[0]) - (s_fQuaternionB[4] * s_fQuaternionA[3]);
+			s_fQuaternionR[2] = (s_fQuaternionB[1] * s_fQuaternionA[3]) - (s_fQuaternionB[2] * s_fQuaternionA[0]) + (s_fQuaternionB[3] * s_fQuaternionA[1]) + (s_fQuaternionB[4] * s_fQuaternionA[2]);
+			s_fQuaternionR[3] = (s_fQuaternionB[1] * s_fQuaternionA[0]) + (s_fQuaternionB[2] * s_fQuaternionA[3]) - (s_fQuaternionB[3] * s_fQuaternionA[2]) + (s_fQuaternionB[4] * s_fQuaternionA[1]);
+
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+
 			break;
 		}
 
@@ -902,12 +926,38 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 		// |a|
 		case IDC_BUTTON10:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			int _iTemp = 0;
+
+			for (int i = 0; i < 4; ++i)
+			{
+				_iTemp += s_fQuaternionA[i] * s_fQuaternionA[i];
+
+			}
+
+			s_fScalar = sqrt(_iTemp);
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 			break;
 		}
 
 		// |b|
 		case IDC_BUTTON11:
 		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
+
+			int _iTemp = 0;
+
+			for (int i = 0; i < 4; ++i)
+			{
+				_iTemp += s_fQuaternionB[i] * s_fQuaternionB[i];
+
+			}
+
+			s_fScalar = sqrt(_iTemp);
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fScalar);
 			break;
 		}
 
