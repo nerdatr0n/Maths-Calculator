@@ -1,3 +1,17 @@
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2018 Media Design School
+//
+// File Name	: quaternions.h
+// Description	: Quaternion calculator calculations
+// Author		: Benjamin Zaher and David Haverland
+// Mail			: benjamin.zah8502@mediadesign.school.nz and david.hav8466@mediadesign.school.nz
+//
+
 #pragma once
 
 
