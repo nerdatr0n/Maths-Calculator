@@ -22,7 +22,6 @@
 #define IDD_DialogQuaternion            105
 #define IDR_MENU1                       106
 #define IDC_EDIT1                       1001
-#define IDC_STATIC1                     1001
 #define IDC_EDIT2                       1002
 #define IDC_EDIT3                       1003
 #define IDC_EDIT4                       1004
@@ -62,7 +61,9 @@
 #define IDC_EDIT26                      1026
 #define IDC_BUTTON13                    1026
 #define IDC_EDIT27                      1027
+#define IDC_BUTTON16                    1027
 #define IDC_EDIT28                      1028
+#define IDC_BUTTON17                    1028
 #define IDC_BUTTON4                     1029
 #define IDC_BUTTON14                    1029
 #define IDC_EDIT30                      1030
@@ -70,6 +71,7 @@
 #define IDC_EDIT_A11                    1030
 #define IDC_EDIT29                      1031
 #define IDC_EDIT_A12                    1031
+#define IDC_BUTTON18                    1031
 #define IDC_EDIT31                      1032
 #define IDC_EDIT_A13                    1032
 #define IDC_EDIT33                      1033
@@ -181,7 +183,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        102
+#define _APS_NEXT_RESOURCE_VALUE        103
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           101

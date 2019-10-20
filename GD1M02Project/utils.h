@@ -6,10 +6,10 @@
 //
 // (c) 2018 Media Design School
 //
-// File Name	: utility.h
-// Description	: the utility file
-// Author		: Ben Zaher and David Haverland
-// Mail			: benjamin.zah8503@mediadesign.school.nz and david.hav8466@mediadesign.school.nz
+// File Name	: utils.h
+// Description	: Utilities
+// Author		: Benjamin Zaher and David Haverland
+// Mail			: benjamin.zah8502@mediadesign.school.nz and david.hav8466@mediadesign.school.nz
 //
 
 #pragma once
