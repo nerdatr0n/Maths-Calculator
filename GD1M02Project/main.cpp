@@ -25,6 +25,7 @@
 #include "resource.h"
 #include "matrix.h"
 #include "quaternions.h"
+#include "gaussian.h"
 
 #define WINDOW_CLASS_NAME L"WINCLASS1"
 
@@ -786,8 +787,191 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 	LPARAM _lparam)
 {
 
+
+	static float s_fLine1[4];
+	static float s_fLine2[4];
+	static float s_fLine3[4];
+
 	switch (_msg)
 	{
+
+	case WM_COMMAND:
+	{
+		switch (LOWORD(_wparam))
+		{
+
+			// Multiply Row 
+		case IDC_BUTTON1:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			int iRow = ReadFromEditBox(_hwnd, IDC_EDIT13);
+			int iMultiply = ReadFromEditBox(_hwnd, IDC_EDIT14);
+
+			if (iRow == 1)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine1[i] = s_fLine1[i] * iMultiply;
+
+				}
+			}
+			else if (iRow == 2)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine2[i] = s_fLine2[i] * iMultiply;
+
+				}
+			}
+			else if (iRow == 3)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine3[i] = s_fLine3[i] * iMultiply;
+
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+			break;
+		}
+
+		// Swap Row 
+		case IDC_BUTTON2:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			float fTemp;
+
+			int iRow1 = ReadFromEditBox(_hwnd, IDC_EDIT16);
+			int iRow2 = ReadFromEditBox(_hwnd, IDC_EDIT17);
+
+			if ((iRow1 == 1 and iRow2 == 2) or (iRow1 == 2 and iRow2 == 1))
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					fTemp = s_fLine1[i];
+					s_fLine1[i] = s_fLine2[i];
+					s_fLine2[i] = fTemp;
+				}
+			}
+			else if ((iRow1 == 1 and iRow2 == 3) or (iRow1 == 3 and iRow2 == 1))
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					fTemp = s_fLine1[i];
+					s_fLine1[i] = s_fLine3[i];
+					s_fLine3[i] = fTemp;
+				}
+			}
+			else if ((iRow1 == 2 and iRow2 == 3) or (iRow1 == 3 and iRow2 == 2))
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					fTemp = s_fLine3[i];
+					s_fLine3[i] = s_fLine2[i];
+					s_fLine2[i] = fTemp;
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+			break;
+		}
+
+		// Add
+		case IDC_BUTTON3:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			float fTemp;
+
+			float fMultiply = ReadFromEditBox(_hwnd, IDC_EDIT19);
+
+			int iRow1 = ReadFromEditBox(_hwnd, IDC_EDIT20);
+			int iRow2 = ReadFromEditBox(_hwnd, IDC_EDIT22);
+
+			if (iRow1 == 1 and iRow2 == 2)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine1[i] = s_fLine1[i] + (fMultiply * s_fLine2[i]);
+				}
+			}
+			else if (iRow1 == 1 and iRow2 == 3)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine1[i] = s_fLine1[i] + (fMultiply * s_fLine3[i]);
+				}
+			}
+			else if (iRow1 == 2 and iRow2 == 3)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine2[i] = s_fLine2[i] + (fMultiply * s_fLine3[i]);
+				}
+			}
+			else if (iRow1 == 2 and iRow2 == 1)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine2[i] = s_fLine2[i] + (fMultiply * s_fLine1[i]);
+				}
+			}
+			else if (iRow1 == 3 and iRow2 == 1)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine3[i] = s_fLine3[i] + (fMultiply * s_fLine1[i]);
+				}
+			}
+			else if (iRow1 == 3 and iRow2 == 2)
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					s_fLine3[i] = s_fLine3[i] + (fMultiply * s_fLine2[i]);
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+			break;
+		}
+
+		// Random Fill
+		case IDC_BUTTON10:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fLine1[i] = rand() % 10 + 1;
+			}
+
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fLine2[i] = rand() % 10 + 1;
+
+			}
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fLine3[i] = rand() % 10 + 1;
+
+			}
+			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+			break;
+		}
+
+		default:
+			break;
+		}
+		break;
+	}
+
+
+
+
+
 	case WM_CLOSE:
 	{
 		ShowWindow(_hwnd, SW_HIDE);
