@@ -834,6 +834,13 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 			}
 
 			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			if(checkRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is row echlon form!", L"Row echelon detector", MB_OK);
+
+			if(checkReducedRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is reduced row echlon form!", L"Reduced row echelon detector", MB_OK);
+
 			break;
 		}
 
@@ -876,6 +883,14 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 			}
 
 			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			if (checkRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is row echlon form!", L"Row echelon detector", MB_OK);
+
+			if (checkReducedRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is reduced row echlon form!", L"Reduced row echelon detector", MB_OK);
+
+
 			break;
 		}
 
@@ -888,8 +903,8 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 
 			float fMultiply = ReadFromEditBox(_hwnd, IDC_EDIT19);
 
-			int iRow1 = ReadFromEditBox(_hwnd, IDC_EDIT20);
-			int iRow2 = ReadFromEditBox(_hwnd, IDC_EDIT22);
+			int iRow1 = ReadFromEditBox(_hwnd, IDC_EDIT22);
+			int iRow2 = ReadFromEditBox(_hwnd, IDC_EDIT20);
 
 			if (iRow1 == 1 and iRow2 == 2)
 			{
@@ -935,6 +950,14 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 			}
 
 			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			if (checkRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is row echlon form!", L"Row echelon detector", MB_OK);
+
+			if (checkReducedRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is reduced row echlon form!", L"Reduced row echelon detector", MB_OK);
+
+
 			break;
 		}
 
@@ -959,6 +982,14 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 
 			}
 			WriteToDialogBoxes(_hwnd, s_fLine1, s_fLine2, s_fLine3);
+
+			if (checkRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is row echlon form!", L"Row echelon detector", MB_OK);
+
+			if (checkReducedRowEchelon(_hwnd, s_fLine1, s_fLine2, s_fLine3))
+				MessageBox(_hwnd, L"This is reduced row echlon form!", L"Reduced row echelon detector", MB_OK);
+
+
 			break;
 		}
 
@@ -1439,6 +1470,7 @@ int WINAPI WinMain(HINSTANCE _hInstance,
 	g_hDlgGaussian = CreateDialog(_hInstance, MAKEINTRESOURCE(IDD_DialogGaussian), hwnd, (DLGPROC)GaussianDlgProc);
 	g_hDlgQuaternion = CreateDialog(_hInstance, MAKEINTRESOURCE(IDD_DialogQuaternion), hwnd, (DLGPROC)QuaternionDlgProc);
 	g_hDlgSLERP = CreateDialog(_hInstance, MAKEINTRESOURCE(IDD_DialogSLERP), hwnd, (DLGPROC)SLERPDlgProc);
+
 
 	// Enter main event loop
 	while (true)
