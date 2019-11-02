@@ -26,6 +26,7 @@
 #include "matrix.h"
 #include "quaternions.h"
 #include "gaussian.h"
+#include "slerp.h"
 
 #define WINDOW_CLASS_NAME L"WINCLASS1"
 
@@ -1399,8 +1400,102 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 	LPARAM _lparam)
 {
 
+	static float s_fQuaternionA[4];
+	static float s_fQuaternionB[4];
+	static float s_fQuaternionR[4];
+
+	static float s_fMatrixR[4][4];
+
+	static float s_fScalar;
+
+
 	switch (_msg)
 	{
+
+	case WM_COMMAND:
+	{
+		switch (LOWORD(_wparam))
+		{
+
+		// top slerp(a, b, t)
+		case IDC_BUTTON1:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+			break;
+		}
+
+		// a
+		case IDC_BUTTON2:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+			break;
+		}
+
+		// b
+		case IDC_BUTTON3:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+			break;
+		}
+
+
+		// bottom slerp(a, b, t)
+		case IDC_BUTTON4:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+
+			break;
+		}
+		
+
+		// a fill random
+		case IDC_BUTTON8:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+			
+
+			for (int i = 0; i < 4; ++i)
+			{
+				s_fQuaternionA[i] = rand() % 10 + 1;
+				s_fQuaternionB[i] = rand() % 10 + 1;
+				s_fQuaternionR[i] = rand() % 10 + 1;
+
+				for (int j = 0; j < 4; ++j)
+				{
+					s_fMatrixR[i][j] = rand() % 10 + 1;
+				}
+			}
+			s_fScalar = rand() % 10 + 1;
+
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+			break;
+		}
+
+		default:
+			break;
+		}
+		break;
+	}
+
 	case WM_CLOSE:
 	{
 		ShowWindow(_hwnd, SW_HIDE);
