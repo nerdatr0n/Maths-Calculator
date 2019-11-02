@@ -6,8 +6,8 @@
 //
 // (c) 2018 Media Design School
 //
-// File Name	: gaussian.h
-// Description	: Gaussian calculator functions
+// File Name	: slerp.h
+// Description	: Slerp calculator functions
 // Author		: Benjamin Zaher and David Haverland
 // Mail			: benjamin.zah8502@mediadesign.school.nz and david.hav8466@mediadesign.school.nz
 //
@@ -94,27 +94,29 @@ void WriteToDialogBoxes(HWND _hwnd, float _fLine1[4], float _fLine2[4], float _f
 
 
 	// For Matrix R
-	WriteToEditBox(_hwnd, IDC_EDIT34, _fMatrix1[0][0]);
-	WriteToEditBox(_hwnd, IDC_EDIT35, _fMatrix1[1][0]);
-	WriteToEditBox(_hwnd, IDC_EDIT36, _fMatrix1[2][0]);
-	WriteToEditBox(_hwnd, IDC_EDIT37, _fMatrix1[3][0]);
+	if (_fMatrix1 != nullptr)
+	{
+		WriteToEditBox(_hwnd, IDC_EDIT34, _fMatrix1[0][0]);
+		WriteToEditBox(_hwnd, IDC_EDIT35, _fMatrix1[0][1]);
+		WriteToEditBox(_hwnd, IDC_EDIT36, _fMatrix1[0][2]);
+		WriteToEditBox(_hwnd, IDC_EDIT37, _fMatrix1[0][3]);
 
-	WriteToEditBox(_hwnd, IDC_EDIT38, _fMatrix1[0][1]);
-	WriteToEditBox(_hwnd, IDC_EDIT39, _fMatrix1[1][1]);
-	WriteToEditBox(_hwnd, IDC_EDIT40, _fMatrix1[2][1]);
-	WriteToEditBox(_hwnd, IDC_EDIT41, _fMatrix1[3][1]);
-	
-	WriteToEditBox(_hwnd, IDC_EDIT42, _fMatrix1[0][2]);
-	WriteToEditBox(_hwnd, IDC_EDIT43, _fMatrix1[1][2]);
-	WriteToEditBox(_hwnd, IDC_EDIT44, _fMatrix1[2][2]);
-	WriteToEditBox(_hwnd, IDC_EDIT45, _fMatrix1[3][2]);
-	
-	WriteToEditBox(_hwnd, IDC_EDIT46, _fMatrix1[0][3]);
-	WriteToEditBox(_hwnd, IDC_EDIT47, _fMatrix1[1][3]);
-	WriteToEditBox(_hwnd, IDC_EDIT48, _fMatrix1[2][3]);
-	WriteToEditBox(_hwnd, IDC_EDIT49, _fMatrix1[3][3]);
+		WriteToEditBox(_hwnd, IDC_EDIT38, _fMatrix1[1][0]);
+		WriteToEditBox(_hwnd, IDC_EDIT39, _fMatrix1[1][1]);
+		WriteToEditBox(_hwnd, IDC_EDIT40, _fMatrix1[1][2]);
+		WriteToEditBox(_hwnd, IDC_EDIT41, _fMatrix1[1][3]);
 
+		WriteToEditBox(_hwnd, IDC_EDIT42, _fMatrix1[2][0]);
+		WriteToEditBox(_hwnd, IDC_EDIT43, _fMatrix1[2][1]);
+		WriteToEditBox(_hwnd, IDC_EDIT44, _fMatrix1[2][2]);
+		WriteToEditBox(_hwnd, IDC_EDIT45, _fMatrix1[2][3]);
 
+		WriteToEditBox(_hwnd, IDC_EDIT46, _fMatrix1[3][0]);
+		WriteToEditBox(_hwnd, IDC_EDIT47, _fMatrix1[3][1]);
+		WriteToEditBox(_hwnd, IDC_EDIT48, _fMatrix1[3][2]);
+		WriteToEditBox(_hwnd, IDC_EDIT49, _fMatrix1[3][3]);
+
+	}
 
 }
 

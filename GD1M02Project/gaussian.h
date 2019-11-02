@@ -80,6 +80,7 @@ bool checkRowEchelon(HWND _hwnd, float _fLine1[4], float _fLine2[4], float _fLin
 	leadings[0] = 7;
 	leadings[1] = 8;
 	leadings[2] = 9;
+	leadings[3] = 10;
 
 	ReadFromDialogBoxes(_hwnd, _fLine1, _fLine2, _fLine3);
 
@@ -145,7 +146,7 @@ bool checkRowEchelon(HWND _hwnd, float _fLine1[4], float _fLine2[4], float _fLin
 	}
 
 	//Property 3
-	for (int o = 0; o < 2; ++o)
+	for (int o = 0; o < 3; ++o)
 	{
 		if (leadings[o] >= leadings[o + 1])
 		{
@@ -172,6 +173,10 @@ bool checkReducedRowEchelon(HWND _hwnd, float _fLine1[4], float _fLine2[4], floa
 			result = false;
 
 	if (leadings[2] != 9)
+		if (_fLine1[leadings[2]] != 0 || _fLine2[leadings[2]] != 0)
+			result = false;
+
+	if (leadings[3] != 10)
 		if (_fLine1[leadings[2]] != 0 || _fLine2[leadings[2]] != 0)
 			result = false;
 

@@ -1422,9 +1422,63 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 		{
 			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
 
+			//Ease of understanding variables
+			float& x1 = s_fQuaternionA[0];
+			float& y1 = s_fQuaternionA[1];
+			float& z1 = s_fQuaternionA[2];
+			float& w1 = s_fQuaternionA[3];
+			
+			float& x2 = s_fQuaternionB[0];
+			float& y2 = s_fQuaternionB[1];
+			float& z2 = s_fQuaternionB[2];
+			float& w2 = s_fQuaternionB[3];
 
+			float& x3 = s_fQuaternionR[0];
+			float& y3 = s_fQuaternionR[1];
+			float& z3 = s_fQuaternionR[2];
+			float& w3 = s_fQuaternionR[3];
 
-			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
+			float& t = s_fScalar;
+
+			//Values needed for calculation
+			double dotProduct = w1 * w2 + x1 * x2 + y1 * y2 + z1 * z2;
+
+			if (dotProduct < 0) {
+				w2 = -w2;
+				x2 = -x2;
+				y2 = -y2; 
+				dotProduct = -dotProduct;
+			}
+
+			double acosAngle = acos(dotProduct);
+			double angle2 = sqrt(1.0f - dotProduct * dotProduct);
+
+			double ratioA = sin((1.0f - t) * acosAngle) / angle2;
+			double ratioB = sin(t * acosAngle) / angle2;
+
+			//Calculation
+			if (abs(dotProduct) >= 1.0f) {
+				w3 = w1;
+				x3 = x1;
+				y3 = y1;
+				z3 = z1;
+			}
+			else if (fabs(angle2) < 0.001f) {
+				w3 = (w1 * 0.5 + w2 * 0.5);
+				x3 = (x1 * 0.5 + x2 * 0.5);
+				y3 = (y1 * 0.5 + y2 * 0.5);
+				z3 = (z1 * 0.5 + z2 * 0.5);
+			}
+			else
+			{
+				w3 = (w1 * ratioA + w2 * ratioB);
+				x3 = (x1 * ratioA + x2 * ratioB);
+				y3 = (y1 * ratioA + y2 * ratioB);
+				z3 = (z1 * ratioA + z2 * ratioB);
+			}
+
+			//Output
+			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, nullptr, s_fScalar);
 
 			break;
 		}
@@ -1434,6 +1488,38 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 		{
 			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
 
+			float mag = 0;
+
+			for (int i = 0; i < 4; ++i)
+				mag += s_fQuaternionA[i] * s_fQuaternionA[i];
+
+			mag = sqrt(mag);
+
+			float qx = s_fQuaternionA[0] / mag;
+			float qy = s_fQuaternionA[1] / mag;
+			float qz = s_fQuaternionA[2] / mag;
+			float qw = s_fQuaternionA[3] / mag;
+		
+
+			s_fMatrixR[0][0] = 1 - 2 * pow(qy, 2) - 2 * pow(qz, 2);
+			s_fMatrixR[0][1] = 2 * qx*qy - 2 * qz*qw;
+			s_fMatrixR[0][2] = 2 * qx*qz + 2 * qy*qw;
+			s_fMatrixR[0][3] = 0;
+
+			s_fMatrixR[1][0] = 2 * qx*qy + 2 * qz*qw;
+			s_fMatrixR[1][1] = 1 - 2 * pow(qx,2) - 2 * pow(qz,2);
+			s_fMatrixR[1][2] = 2 * qy*qz - 2 * qx*qw;
+			s_fMatrixR[1][3] = 0;
+
+			s_fMatrixR[2][0] = 2 * qx*qz - 2 * qy*qw;
+			s_fMatrixR[2][1] = 2 * qy*qz + 2 * qx*qw;
+			s_fMatrixR[2][2] = 1 - 2 * pow(qx,2) - 2 * pow(qy,2);
+			s_fMatrixR[2][3] = 0;
+
+			s_fMatrixR[3][0] = 0;
+			s_fMatrixR[3][1] = 0;
+			s_fMatrixR[3][2] = 0;
+			s_fMatrixR[3][3] = 1;
 
 
 			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
@@ -1446,7 +1532,38 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 		{
 			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
 
+			float mag = 0;
 
+			for (int i = 0; i < 4; ++i)
+				mag += s_fQuaternionB[i] * s_fQuaternionB[i];
+
+			mag = sqrt(mag);
+
+			float qx = s_fQuaternionB[0] / mag;
+			float qy = s_fQuaternionB[1] / mag;
+			float qz = s_fQuaternionB[2] / mag;
+			float qw = s_fQuaternionB[3] / mag;
+
+
+			s_fMatrixR[0][0] = 1 - 2 * pow(qy, 2) - 2 * pow(qz, 2);
+			s_fMatrixR[0][1] = 2 * qx*qy - 2 * qz*qw;
+			s_fMatrixR[0][2] = 2 * qx*qz + 2 * qy*qw;
+			s_fMatrixR[0][3] = 0;
+
+			s_fMatrixR[1][0] = 2 * qx*qy + 2 * qz*qw;
+			s_fMatrixR[1][1] = 1 - 2 * pow(qx, 2) - 2 * pow(qz, 2);
+			s_fMatrixR[1][2] = 2 * qy*qz - 2 * qx*qw;
+			s_fMatrixR[1][3] = 0;
+
+			s_fMatrixR[2][0] = 2 * qx*qz - 2 * qy*qw;
+			s_fMatrixR[2][1] = 2 * qy*qz + 2 * qx*qw;
+			s_fMatrixR[2][2] = 1 - 2 * pow(qx, 2) - 2 * pow(qy, 2);
+			s_fMatrixR[2][3] = 0;
+
+			s_fMatrixR[3][0] = 0;
+			s_fMatrixR[3][1] = 0;
+			s_fMatrixR[3][2] = 0;
+			s_fMatrixR[3][3] = 1;
 
 			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
 
@@ -1459,7 +1576,38 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 		{
 			ReadFromDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
 
+			float mag = 0;
 
+			for (int i = 0; i < 4; ++i)
+				mag += s_fQuaternionR[i] * s_fQuaternionR[i];
+
+			mag = sqrt(mag);
+
+			float qx = s_fQuaternionR[0] / mag;
+			float qy = s_fQuaternionR[1] / mag;
+			float qz = s_fQuaternionR[2] / mag;
+			float qw = s_fQuaternionR[3] / mag;
+
+
+			s_fMatrixR[0][0] = 1 - 2 * pow(qy, 2) - 2 * pow(qz, 2);
+			s_fMatrixR[0][1] = 2 * qx*qy - 2 * qz*qw;
+			s_fMatrixR[0][2] = 2 * qx*qz + 2 * qy*qw;
+			s_fMatrixR[0][3] = 0;
+
+			s_fMatrixR[1][0] = 2 * qx*qy + 2 * qz*qw;
+			s_fMatrixR[1][1] = 1 - 2 * pow(qx, 2) - 2 * pow(qz, 2);
+			s_fMatrixR[1][2] = 2 * qy*qz - 2 * qx*qw;
+			s_fMatrixR[1][3] = 0;
+
+			s_fMatrixR[2][0] = 2 * qx*qz - 2 * qy*qw;
+			s_fMatrixR[2][1] = 2 * qy*qz + 2 * qx*qw;
+			s_fMatrixR[2][2] = 1 - 2 * pow(qx, 2) - 2 * pow(qy, 2);
+			s_fMatrixR[2][3] = 0;
+
+			s_fMatrixR[3][0] = 0;
+			s_fMatrixR[3][1] = 0;
+			s_fMatrixR[3][2] = 0;
+			s_fMatrixR[3][3] = 1;
 
 			WriteToDialogBoxes(_hwnd, s_fQuaternionA, s_fQuaternionB, s_fQuaternionR, s_fMatrixR, s_fScalar);
 
@@ -1481,7 +1629,7 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 
 				for (int j = 0; j < 4; ++j)
 				{
-					s_fMatrixR[i][j] = rand() % 10 + 1;
+					s_fMatrixR[i][j] = 0;
 				}
 			}
 			s_fScalar = rand() % 10 + 1;
