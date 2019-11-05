@@ -76,6 +76,8 @@
 #define IDC_EDIT_A13                    1032
 #define IDC_EDIT33                      1033
 #define IDC_EDIT_AScaled                1033
+#define IDC_BUTTON19                    1033
+#define IDC_BUTTON20                    1033
 #define IDC_EDIT34                      1034
 #define IDC_EDIT35                      1035
 #define IDC_EDIT36                      1036
@@ -183,7 +185,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        108
+#define _APS_NEXT_RESOURCE_VALUE        110
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           101

@@ -27,6 +27,7 @@
 #include "quaternions.h"
 #include "gaussian.h"
 #include "slerp.h"
+#include "Transformation.h"
 
 #define WINDOW_CLASS_NAME L"WINCLASS1"
 
@@ -766,9 +767,64 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 	WPARAM _wparam,
 	LPARAM _lparam)
 {
+	static float s_fScalefactor[3];
+	static float s_fTranslation[3];
+	static float s_fRotation[3];
+	static float s_fProjection[3];
+
+	static float s_fAngle;
+	static float s_fDistance;
+
+	static float s_fMatrixRM[4][4];
+	static float s_fMatrixCM[4][4];
+
+
 
 	switch (_msg)
 	{
+
+	case WM_COMMAND:
+	{
+		switch (LOWORD(_wparam))
+		{
+
+		// Compute
+		case IDC_BUTTON1:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance);
+
+			
+			//Output
+			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
+
+			break;
+		}
+
+		// fill random
+		case IDC_BUTTON20:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance);
+
+
+			for (int i = 0; i < 3; ++i)
+			{
+				s_fScalefactor[i] = rand() % 10 + 1;
+				s_fTranslation[i] = rand() % 10 + 1;
+				s_fRotation[i] = rand() % 10 + 1;
+				s_fProjection[i] = rand() % 10 + 1;
+			}
+			s_fAngle = rand() % 10 + 1;
+			s_fDistance = rand() % 10 + 1;
+
+			//WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
+			break;
+		}
+
+		default:
+			break;
+		}
+		break;
+	}
 	case WM_CLOSE:
 	{
 		ShowWindow(_hwnd, SW_HIDE);
