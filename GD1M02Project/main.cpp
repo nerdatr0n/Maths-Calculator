@@ -778,7 +778,10 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 	static float s_fMatrixRM[4][4];
 	static float s_fMatrixCM[4][4];
 
-
+	static float s_fScalefactorMatrix[4][4];
+	static float s_fTranslationMatrix[4][4];
+	static float s_fRotationMatrix[4][4];
+	static float s_fProjectionMatrix[4][4];
 
 	switch (_msg)
 	{
@@ -815,8 +818,11 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			}
 			s_fAngle = rand() % 10 + 1;
 			s_fDistance = rand() % 10 + 1;
+			//s_fDistance = 1;
 
-			//WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
+			//WriteToEditBox(_hwnd, IDC_EDIT15, s_fDistance);
+
+			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
 			break;
 		}
 
