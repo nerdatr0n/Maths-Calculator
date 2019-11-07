@@ -92,16 +92,50 @@ void SetMatrixToTranslation(float _fMatrixR[4][4], float _fTranslation[3])
 	_fMatrixR[3][1] = _fTranslation[1];
 	_fMatrixR[3][2] = _fTranslation[2];
 }
-void SetMatrixToRotation(float _fMatrixR[4][4], float s_fRotation[3], float s_fAngle)
+void SetMatrixToRotation(float _fMatrixR[4][4], int _xyz, float s_fAngle)
 {
+	SetMatrixToIdentity(_fMatrixR);
+
+	switch (_xyz)
+	{
+	//x
+	case 1:
+		_fMatrixR[0][0] = 1;
+		_fMatrixR[1][1] = cos(s_fAngle);
+		_fMatrixR[1][2] = -sin(s_fAngle);
+		_fMatrixR[2][1] = sin(s_fAngle);
+		_fMatrixR[2][2] = cos(s_fAngle);
+
+		break;
+
+	//y
+	case 2:
+		_fMatrixR[0][0] = cos(s_fAngle);
+		_fMatrixR[0][2] = sin(s_fAngle);
+		_fMatrixR[1][1] = 1;
+		_fMatrixR[2][0] = -sin(s_fAngle);
+		_fMatrixR[2][2] = cos(s_fAngle);
+		
+		break;
+
+	//z
+	case 3:
+		_fMatrixR[0][0] = cos(s_fAngle);
+		_fMatrixR[0][1] = -sin(s_fAngle);
+		_fMatrixR[1][0] = sin(s_fAngle);;
+		_fMatrixR[1][1] = cos(s_fAngle);
+
+		break;
+	}
+}
+void SetMatrixToProjection(float _fMatrixR[4][4], int _xyz, float s_fDistance)
+{
+	SetMatrixToIdentity(_fMatrixR);
+
 
 }
-void SetMatrixToProjectio(float _fMatrixR[4][4], float s_fTranslation[3], float s_fDistance)
-{
 
-}
-
-void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _fLine3[3], float& _fScalar1, float _fLine4[3], float& _fScalar2)
+void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float& _fScalar1, float _fLine4[3], float& _fScalar2)
 {
 	 // for Scale Factor
 	_fLine1[0] = ReadFromEditBox(_hwnd, IDC_EDIT1);
@@ -113,24 +147,16 @@ void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _
 	_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT5);
 	_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT6);
 	
-	// for Rotation amount
-	_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT7);
-	_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT28);
-	_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT30);
 	
 	_fScalar1 = ReadFromEditBox(_hwnd, IDC_EDIT13);
 	
-	// for Projection
-	_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT14);
-	_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT29);
-	_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT31);
 	
 	_fScalar2 = ReadFromEditBox(_hwnd, IDC_EDIT15);
 
 }
 
 
-void WriteToDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _fLine3[3], float _fScalar1, float _fLine4[3], float _fScalar2, float _fMatrixA[4][4], float _fMatrixB[4][4])
+void WriteToDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _fScalar1, float _fLine4[3], float _fScalar2, float _fMatrixA[4][4], float _fMatrixB[4][4])
 {
 
 	
@@ -145,20 +171,12 @@ void WriteToDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _f
 	WriteToEditBox(_hwnd, IDC_EDIT5, _fLine2[1]);
 	WriteToEditBox(_hwnd, IDC_EDIT6, _fLine2[2]);
 	
-	// for Rotation amount
-	WriteToEditBox(_hwnd, IDC_EDIT7, _fLine2[0]);
-	WriteToEditBox(_hwnd, IDC_EDIT28, _fLine2[1]);
-	WriteToEditBox(_hwnd, IDC_EDIT30, _fLine2[2]);
-	
+	// for Rotation amount	
 	WriteToEditBox(_hwnd, IDC_EDIT13, _fScalar1);
 	
+	// for Projection
 	WriteToEditBox(_hwnd, IDC_EDIT15, _fScalar2);
 
-
-	// for Projection
-	WriteToEditBox(_hwnd, IDC_EDIT14, _fLine2[0]);
-	WriteToEditBox(_hwnd, IDC_EDIT29, _fLine2[1]);
-	WriteToEditBox(_hwnd, IDC_EDIT31, _fLine2[2]);
 	
 	
 	
