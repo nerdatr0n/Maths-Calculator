@@ -34,6 +34,7 @@
 HMENU g_hMenu;
 HWND g_hDlgMatrix, g_hDlgTransformation, g_hDlgGaussian, g_hDlgQuaternion, g_hDlgSLERP;
 
+
 void GameLoop()
 {
 	//One frame of game logic occurs here...
@@ -820,9 +821,10 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			s_fDistance = rand() % 10 + 1;
 			//s_fDistance = 1;
 
-			//WriteToEditBox(_hwnd, IDC_EDIT15, s_fDistance);
+			
 
 			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
+			WriteToEditBox(_hwnd, IDC_EDIT15, s_fDistance);
 			break;
 		}
 

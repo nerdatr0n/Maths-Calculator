@@ -17,36 +17,67 @@
 #include <windows.h>   // Include all the windows headers.
 #include <windowsx.h>  // Include useful macros.
 
+void SetMatrixToMatrix(float _fMatrixA[4][4], float _fMatrixR[4][4])
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			_fMatrixR[i][j] = _fMatrixA[i][j];
+		}
+	}
+}
 
+void MultiplyMatrix(float _fMatrixA[4][4], float _fMatrixB[4][4], float _fMatrixR[4][4])
+{
+	//Changed to float
+	float fMatrixTemp[4][4];
+	float fTemp = 0.0f;
 
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			fTemp = 0;
+			for (int k = 0; k < 4; ++k)
+			{
+				fTemp += _fMatrixA[i][k] * _fMatrixB[k][j];
+			}
+			fMatrixTemp[i][j] = fTemp;
+		}
+	}
+
+	SetMatrixToMatrix(fMatrixTemp, _fMatrixR);
+	delete fMatrixTemp;
+}
 
 
 
 void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _fLine3[3], float& _fScalar1, float _fLine4[3], float& _fScalar2)
 {
-	// for Scale Factor
-	//_fLine1[0] = ReadFromEditBox(_hwnd, IDC_EDIT1);
-	//_fLine1[1] = ReadFromEditBox(_hwnd, IDC_EDIT2);
-	//_fLine1[2] = ReadFromEditBox(_hwnd, IDC_EDIT3);
+	 // for Scale Factor
+	_fLine1[0] = ReadFromEditBox(_hwnd, IDC_EDIT1);
+	_fLine1[1] = ReadFromEditBox(_hwnd, IDC_EDIT2);
+	_fLine1[2] = ReadFromEditBox(_hwnd, IDC_EDIT3);
 
-	//// for Translation amount
-	//_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT4);
-	//_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT5);
-	//_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT6);
-	//
-	//// for Rotation amount
-	//_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT7);
-	//_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT28);
-	//_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT30);
-	//
-	//_fScalar1 = ReadFromEditBox(_hwnd, IDC_EDIT13);
-	//
-	//// for Projection
-	//_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT14);
-	//_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT29);
-	//_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT31);
-	//
-	//_fScalar1 = ReadFromEditBox(_hwnd, IDC_EDIT15);
+	// for Translation amount
+	_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT4);
+	_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT5);
+	_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT6);
+	
+	// for Rotation amount
+	_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT7);
+	_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT28);
+	_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT30);
+	
+	_fScalar1 = ReadFromEditBox(_hwnd, IDC_EDIT13);
+	
+	// for Projection
+	_fLine2[0] = ReadFromEditBox(_hwnd, IDC_EDIT14);
+	_fLine2[1] = ReadFromEditBox(_hwnd, IDC_EDIT29);
+	_fLine2[2] = ReadFromEditBox(_hwnd, IDC_EDIT31);
+	
+	_fScalar2 = ReadFromEditBox(_hwnd, IDC_EDIT15);
 
 }
 
@@ -73,12 +104,15 @@ void WriteToDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _f
 	
 	WriteToEditBox(_hwnd, IDC_EDIT13, _fScalar1);
 	
+	WriteToEditBox(_hwnd, IDC_EDIT15, _fScalar1);
+
+
 	// for Projection
 	WriteToEditBox(_hwnd, IDC_EDIT14, _fLine2[0]);
 	WriteToEditBox(_hwnd, IDC_EDIT29, _fLine2[1]);
 	WriteToEditBox(_hwnd, IDC_EDIT31, _fLine2[2]);
 	
-	//WriteToEditBox(_hwnd, IDC_EDIT15, _fMatrixA[0][0]);
+	
 	
 	
 	// for Row-Major Format

@@ -37,6 +37,7 @@
 #define IDC_EDIT14                      1014
 #define IDC_EDIT15                      1015
 #define IDC_BUTTON1                     1015
+#define IDC_EDIT120                     1015
 #define IDC_EDIT16                      1016
 #define IDC_BUTTON5                     1016
 #define IDC_EDIT17                      1017
@@ -76,7 +77,6 @@
 #define IDC_EDIT_A13                    1032
 #define IDC_EDIT33                      1033
 #define IDC_EDIT_AScaled                1033
-#define IDC_BUTTON19                    1033
 #define IDC_BUTTON20                    1033
 #define IDC_EDIT34                      1034
 #define IDC_EDIT35                      1035
