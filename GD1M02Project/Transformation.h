@@ -17,6 +17,25 @@
 #include <windows.h>   // Include all the windows headers.
 #include <windowsx.h>  // Include useful macros.
 
+void SetMatrixToIdentity(float _fMatrixR[4][4])
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			if (i == j)
+			{
+				_fMatrixR[i][j] = 1;
+			}
+			else
+			{
+				_fMatrixR[i][j] = 0;
+			}
+		}
+	}
+}
+
+
 void SetMatrixToMatrix(float _fMatrixA[4][4], float _fMatrixR[4][4])
 {
 	for (int i = 0; i < 4; ++i)
@@ -48,10 +67,39 @@ void MultiplyMatrix(float _fMatrixA[4][4], float _fMatrixB[4][4], float _fMatrix
 	}
 
 	SetMatrixToMatrix(fMatrixTemp, _fMatrixR);
-	delete fMatrixTemp;
+	//delete fMatrixTemp;
 }
 
+void SetMatrixToScale(float _fMatrixR[4][4], float _fScalefactor[3])
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			_fMatrixR[i][j] = 0;
+		}
+	}
+	_fMatrixR[0][0] = _fScalefactor[0];
+	_fMatrixR[1][1] = _fScalefactor[1];
+	_fMatrixR[2][2] = _fScalefactor[2];
+	_fMatrixR[3][3] = 1;
+}
+void SetMatrixToTranslation(float _fMatrixR[4][4], float _fTranslation[3])
+{
+	SetMatrixToIdentity(_fMatrixR);
 
+	_fMatrixR[3][0] = _fTranslation[0];
+	_fMatrixR[3][1] = _fTranslation[1];
+	_fMatrixR[3][2] = _fTranslation[2];
+}
+void SetMatrixToRotation(float _fMatrixR[4][4], float s_fRotation[3], float s_fAngle)
+{
+
+}
+void SetMatrixToProjectio(float _fMatrixR[4][4], float s_fTranslation[3], float s_fDistance)
+{
+
+}
 
 void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _fLine3[3], float& _fScalar1, float _fLine4[3], float& _fScalar2)
 {
@@ -104,7 +152,7 @@ void WriteToDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _f
 	
 	WriteToEditBox(_hwnd, IDC_EDIT13, _fScalar1);
 	
-	WriteToEditBox(_hwnd, IDC_EDIT15, _fScalar1);
+	WriteToEditBox(_hwnd, IDC_EDIT15, _fScalar2);
 
 
 	// for Projection

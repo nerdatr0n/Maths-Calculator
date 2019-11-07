@@ -793,7 +793,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 		{
 
 		// Compute
-		case IDC_BUTTON1:
+		case IDC_BUTTON4:
 		{
 			ReadFromDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance);
 
@@ -819,12 +819,11 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			}
 			s_fAngle = rand() % 10 + 1;
 			s_fDistance = rand() % 10 + 1;
-			//s_fDistance = 1;
+
 
 			
 
 			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fRotation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
-			WriteToEditBox(_hwnd, IDC_EDIT15, s_fDistance);
 			break;
 		}
 
