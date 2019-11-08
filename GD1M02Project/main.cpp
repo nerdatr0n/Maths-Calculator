@@ -785,7 +785,6 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 
 	static int s_fItemIndex = -1;
 	static int s_fRotationXYZ = 0;
-	static int s_fProjectionXYZ = 0;
 
 	HWND items = NULL;
 
@@ -873,54 +872,70 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			}
 			break;
 
-		//Projection Tick Boxes
-		case IDC_CHECK4:
-			switch (HIWORD(_wparam))
-			{
-			case BN_CLICKED:
-				if (SendDlgItemMessage(_hwnd, IDC_CHECK4, BM_GETCHECK, 0, 0))
-				{
-					s_fProjectionXYZ = 1;
 
-					CheckDlgButton(_hwnd, IDC_CHECK5, FALSE);
-					CheckDlgButton(_hwnd, IDC_CHECK6, FALSE);
+		//Multiply by current resultant
+		case IDC_BUTTON19:
+		{
+			ReadFromDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM);
+
+			float tempR[4][4];
+
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					tempR[i][j] = s_fMatrixRM[i][j];
+
 				}
+			}
+
+			//Thing to do
+			switch (s_fItemIndex)
+			{
+
+			//Projection
+			case 0:
+				SetMatrixToProjection(s_fMatrixRM, s_fProjection, s_fAngle);
+				break;
+
+			//Rotation
+			case 1:
+				SetMatrixToRotation(s_fMatrixRM, s_fRotationXYZ, s_fAngle);
+				break;
+
+			//Scaling and Skewing
+			case 2:
+				SetMatrixToScale(s_fMatrixRM, s_fScalefactor);
+				break;
+
+			//Translation
+			case 3:
+				SetMatrixToTranslation(s_fMatrixRM, s_fTranslation);
+				break;
+
+			default:
 				break;
 			}
-			break;
 
-		case IDC_CHECK5:
-			switch (HIWORD(_wparam))
+
+			float iTemp = 0.0f;
+
+			for (int i = 0; i < 4; ++i)
 			{
-			case BN_CLICKED:
-				if (SendDlgItemMessage(_hwnd, IDC_CHECK5, BM_GETCHECK, 0, 0))
+				for (int j = 0; j < 4; ++j)
 				{
-					s_fProjectionXYZ = 2;
-
-					CheckDlgButton(_hwnd, IDC_CHECK4, FALSE);
-					CheckDlgButton(_hwnd, IDC_CHECK6, FALSE);
+					iTemp = 0;
+					for (int k = 0; k < 4; ++k)
+					{
+						iTemp += s_fMatrixRM[i][k] * tempR[k][j];
+					}
+					s_fMatrixRM[i][j] = iTemp;
 				}
-				break;
 			}
+
+			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
 			break;
-
-		case IDC_CHECK6:
-			switch (HIWORD(_wparam))
-			{
-			case BN_CLICKED:
-				if (SendDlgItemMessage(_hwnd, IDC_CHECK6, BM_GETCHECK, 0, 0))
-				{
-					s_fProjectionXYZ = 3;
-
-					CheckDlgButton(_hwnd, IDC_CHECK4, FALSE);
-					CheckDlgButton(_hwnd, IDC_CHECK5, FALSE);
-				}
-				break;
-			}
-			break;
-
-
-
+		}
 
 		// Compute
 		case IDC_BUTTON4:
@@ -935,7 +950,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 
 			//Projection
 			case 0:
-				SetMatrixToProjection(s_fMatrixRM, s_fProjectionXYZ, s_fAngle);
+				SetMatrixToProjection(s_fMatrixRM, s_fProjection, s_fAngle);
 				break;
 
 			//Rotation
