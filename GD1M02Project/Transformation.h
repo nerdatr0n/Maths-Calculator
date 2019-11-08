@@ -244,25 +244,25 @@ void WriteToDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _f
 
 
 	// for Column-Major Format
-	WriteToEditBox(_hwnd, IDC_EDIT47, _fMatrixB[0][0]);
-	WriteToEditBox(_hwnd, IDC_EDIT48, _fMatrixB[1][0]);
-	WriteToEditBox(_hwnd, IDC_EDIT49, _fMatrixB[2][0]);
-	WriteToEditBox(_hwnd, IDC_EDIT50, _fMatrixB[3][0]);
+	WriteToEditBox(_hwnd, IDC_EDIT47, _fMatrixA[0][0]);
+	WriteToEditBox(_hwnd, IDC_EDIT48, _fMatrixA[0][1]);
+	WriteToEditBox(_hwnd, IDC_EDIT49, _fMatrixA[0][2]);
+	WriteToEditBox(_hwnd, IDC_EDIT50, _fMatrixA[0][3]);
 
-	WriteToEditBox(_hwnd, IDC_EDIT51, _fMatrixB[0][1]);
-	WriteToEditBox(_hwnd, IDC_EDIT52, _fMatrixB[1][1]);
-	WriteToEditBox(_hwnd, IDC_EDIT53, _fMatrixB[2][1]);
-	WriteToEditBox(_hwnd, IDC_EDIT54, _fMatrixB[3][1]);
+	WriteToEditBox(_hwnd, IDC_EDIT51, _fMatrixA[1][0]);
+	WriteToEditBox(_hwnd, IDC_EDIT52, _fMatrixA[1][1]);
+	WriteToEditBox(_hwnd, IDC_EDIT53, _fMatrixA[1][2]);
+	WriteToEditBox(_hwnd, IDC_EDIT54, _fMatrixA[1][3]);
 
-	WriteToEditBox(_hwnd, IDC_EDIT55, _fMatrixB[0][2]);
-	WriteToEditBox(_hwnd, IDC_EDIT56, _fMatrixB[1][2]);
-	WriteToEditBox(_hwnd, IDC_EDIT57, _fMatrixB[2][2]);
-	WriteToEditBox(_hwnd, IDC_EDIT58, _fMatrixB[3][2]);
+	WriteToEditBox(_hwnd, IDC_EDIT55, _fMatrixA[2][0]);
+	WriteToEditBox(_hwnd, IDC_EDIT56, _fMatrixA[2][1]);
+	WriteToEditBox(_hwnd, IDC_EDIT57, _fMatrixA[2][2]);
+	WriteToEditBox(_hwnd, IDC_EDIT58, _fMatrixA[2][3]);
 
-	WriteToEditBox(_hwnd, IDC_EDIT59, _fMatrixB[0][3]);
-	WriteToEditBox(_hwnd, IDC_EDIT60, _fMatrixB[1][3]);
-	WriteToEditBox(_hwnd, IDC_EDIT61, _fMatrixB[2][3]);
-	WriteToEditBox(_hwnd, IDC_EDIT62, _fMatrixB[3][3]);
+	WriteToEditBox(_hwnd, IDC_EDIT59, _fMatrixA[3][0]);
+	WriteToEditBox(_hwnd, IDC_EDIT60, _fMatrixA[3][1]);
+	WriteToEditBox(_hwnd, IDC_EDIT61, _fMatrixA[3][2]);
+	WriteToEditBox(_hwnd, IDC_EDIT62, _fMatrixA[3][3]);
 
 
 }
