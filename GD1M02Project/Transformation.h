@@ -88,9 +88,9 @@ void SetMatrixToTranslation(float _fMatrixR[4][4], float _fTranslation[3])
 {
 	SetMatrixToIdentity(_fMatrixR);
 
-	_fMatrixR[3][0] = _fTranslation[0];
-	_fMatrixR[3][1] = _fTranslation[1];
-	_fMatrixR[3][2] = _fTranslation[2];
+	_fMatrixR[0][3] = _fTranslation[0];
+	_fMatrixR[1][3] = _fTranslation[1];
+	_fMatrixR[2][3] = _fTranslation[2];
 }
 void SetMatrixToRotation(float _fMatrixR[4][4], int _xyz, float s_fAngle)
 {
@@ -137,11 +137,11 @@ void SetMatrixToProjection(float _fMatrixR[4][4], float _projection[3],  float s
 	_fMatrixR[0][0] *= _projection[0];
 	_fMatrixR[1][1] *= _projection[1];
 	_fMatrixR[2][2] *= _projection[2];
-	_fMatrixR[2][3] = t_v / s_fDistance;
+	_fMatrixR[3][2] = t_v / s_fDistance;
 	_fMatrixR[3][3] = 0;
 }
 
-void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float& _fScalar1, float _fLine3[3], float& _fScalar2, float _fMatrixA[4][4] = NULL)
+void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float& _fScalar1, float _fLine3[3], float& _fScalar2, float _fMatrixA[4][4] = NULL, float _fMatrixB[4][4] = NULL)
 {
 	 // for Scale Factor
 	_fLine1[0] = ReadFromEditBox(_hwnd, IDC_EDIT1);
@@ -163,29 +163,57 @@ void ReadFromDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float& 
 	
 	_fScalar2 = ReadFromEditBox(_hwnd, IDC_EDIT15);
 
-	// for Row-Major Format
+
+	//For Column major format
 	if (_fMatrixA != NULL)
 	{
-		_fMatrixA[0][0] = ReadFromEditBox(_hwnd, IDC_EDIT16);
-		_fMatrixA[1][0] = ReadFromEditBox(_hwnd, IDC_EDIT18);
-		_fMatrixA[2][0] = ReadFromEditBox(_hwnd, IDC_EDIT19);
-		_fMatrixA[3][0] = ReadFromEditBox(_hwnd, IDC_EDIT20);
+		_fMatrixA[0][0] = ReadFromEditBox(_hwnd, IDC_EDIT47);
+		_fMatrixA[0][1] = ReadFromEditBox(_hwnd, IDC_EDIT48);
+		_fMatrixA[0][2] = ReadFromEditBox(_hwnd, IDC_EDIT49);
+		_fMatrixA[0][3] = ReadFromEditBox(_hwnd, IDC_EDIT50);
 
-		_fMatrixA[0][1] = ReadFromEditBox(_hwnd, IDC_EDIT21);
-		_fMatrixA[1][1] = ReadFromEditBox(_hwnd, IDC_EDIT22);
-		_fMatrixA[2][1] = ReadFromEditBox(_hwnd, IDC_EDIT23);
-		_fMatrixA[3][1] = ReadFromEditBox(_hwnd, IDC_EDIT8);
+		_fMatrixA[1][0] = ReadFromEditBox(_hwnd, IDC_EDIT51);
+		_fMatrixA[1][1] = ReadFromEditBox(_hwnd, IDC_EDIT52);
+		_fMatrixA[1][2] = ReadFromEditBox(_hwnd, IDC_EDIT53);
+		_fMatrixA[1][3] = ReadFromEditBox(_hwnd, IDC_EDIT54);
 
-		_fMatrixA[0][2] = ReadFromEditBox(_hwnd, IDC_EDIT9);
-		_fMatrixA[1][2] = ReadFromEditBox(_hwnd, IDC_EDIT10);
-		_fMatrixA[2][2] = ReadFromEditBox(_hwnd, IDC_EDIT11);
-		_fMatrixA[3][2] = ReadFromEditBox(_hwnd, IDC_EDIT12);
+		_fMatrixA[2][0] = ReadFromEditBox(_hwnd, IDC_EDIT55);
+		_fMatrixA[2][1] = ReadFromEditBox(_hwnd, IDC_EDIT56);
+		_fMatrixA[2][2] = ReadFromEditBox(_hwnd, IDC_EDIT57);
+		_fMatrixA[2][3] = ReadFromEditBox(_hwnd, IDC_EDIT58);
 
-		_fMatrixA[0][3] = ReadFromEditBox(_hwnd, IDC_EDIT24);
-		_fMatrixA[1][3] = ReadFromEditBox(_hwnd, IDC_EDIT25);
-		_fMatrixA[2][3] = ReadFromEditBox(_hwnd, IDC_EDIT26);
-		_fMatrixA[3][3] = ReadFromEditBox(_hwnd, IDC_EDIT27);
+		_fMatrixA[3][0] = ReadFromEditBox(_hwnd, IDC_EDIT59);
+		_fMatrixA[3][1] = ReadFromEditBox(_hwnd, IDC_EDIT60);
+		_fMatrixA[3][2] = ReadFromEditBox(_hwnd, IDC_EDIT61);
+		_fMatrixA[3][3] = ReadFromEditBox(_hwnd, IDC_EDIT62);
 	}
+
+
+	// for Row-Major Format
+	if (_fMatrixB != NULL)
+	{
+		_fMatrixB[0][0] = ReadFromEditBox(_hwnd, IDC_EDIT16);
+		_fMatrixB[1][0] = ReadFromEditBox(_hwnd, IDC_EDIT18);
+		_fMatrixB[2][0] = ReadFromEditBox(_hwnd, IDC_EDIT19);
+		_fMatrixB[3][0] = ReadFromEditBox(_hwnd, IDC_EDIT20);
+				
+		_fMatrixB[0][1] = ReadFromEditBox(_hwnd, IDC_EDIT21);
+		_fMatrixB[1][1] = ReadFromEditBox(_hwnd, IDC_EDIT22);
+		_fMatrixB[2][1] = ReadFromEditBox(_hwnd, IDC_EDIT23);
+		_fMatrixB[3][1] = ReadFromEditBox(_hwnd, IDC_EDIT8);
+				
+		_fMatrixB[0][2] = ReadFromEditBox(_hwnd, IDC_EDIT9);
+		_fMatrixB[1][2] = ReadFromEditBox(_hwnd, IDC_EDIT10);
+		_fMatrixB[2][2] = ReadFromEditBox(_hwnd, IDC_EDIT11);
+		_fMatrixB[3][2] = ReadFromEditBox(_hwnd, IDC_EDIT12);
+				
+		_fMatrixB[0][3] = ReadFromEditBox(_hwnd, IDC_EDIT24);
+		_fMatrixB[1][3] = ReadFromEditBox(_hwnd, IDC_EDIT25);
+		_fMatrixB[2][3] = ReadFromEditBox(_hwnd, IDC_EDIT26);
+		_fMatrixB[3][3] = ReadFromEditBox(_hwnd, IDC_EDIT27);
+	}
+
+			    
 
 }
 

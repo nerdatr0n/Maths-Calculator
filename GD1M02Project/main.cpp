@@ -876,7 +876,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 		//Multiply by current resultant
 		case IDC_BUTTON19:
 		{
-			ReadFromDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM);
+			ReadFromDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixCM, s_fMatrixRM);
 
 			float tempR[4][4];
 
@@ -884,10 +884,11 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			{
 				for (int j = 0; j < 4; ++j)
 				{
-					tempR[i][j] = s_fMatrixRM[i][j];
+					tempR[i][j] = s_fMatrixCM[i][j];
 
 				}
 			}
+
 
 			//Thing to do
 			switch (s_fItemIndex)
@@ -895,22 +896,22 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 
 			//Projection
 			case 0:
-				SetMatrixToProjection(s_fMatrixRM, s_fProjection, s_fAngle);
+				SetMatrixToProjection(s_fMatrixCM, s_fProjection, s_fAngle);
 				break;
 
 			//Rotation
 			case 1:
-				SetMatrixToRotation(s_fMatrixRM, s_fRotationXYZ, s_fAngle);
+				SetMatrixToRotation(s_fMatrixCM, s_fRotationXYZ, s_fAngle);
 				break;
 
 			//Scaling and Skewing
 			case 2:
-				SetMatrixToScale(s_fMatrixRM, s_fScalefactor);
+				SetMatrixToScale(s_fMatrixCM, s_fScalefactor);
 				break;
 
 			//Translation
 			case 3:
-				SetMatrixToTranslation(s_fMatrixRM, s_fTranslation);
+				SetMatrixToTranslation(s_fMatrixCM, s_fTranslation);
 				break;
 
 			default:
@@ -927,13 +928,25 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 					iTemp = 0;
 					for (int k = 0; k < 4; ++k)
 					{
-						iTemp += s_fMatrixRM[i][k] * tempR[k][j];
+						iTemp += s_fMatrixCM[i][k] * tempR[k][j];
 					}
-					s_fMatrixRM[i][j] = iTemp;
+					s_fMatrixCM[i][j] = iTemp;
 				}
 			}
 
-			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
+			//Transposing the matrix
+
+
+			//Create transposed matrix
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					s_fMatrixRM[i][j] = s_fMatrixCM[j][i];
+				}
+			}
+
+			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixCM, s_fMatrixRM);
 			break;
 		}
 
@@ -950,22 +963,22 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 
 			//Projection
 			case 0:
-				SetMatrixToProjection(s_fMatrixRM, s_fProjection, s_fAngle);
+				SetMatrixToProjection(s_fMatrixCM, s_fProjection, s_fAngle);
 				break;
 
 			//Rotation
 			case 1:
-				SetMatrixToRotation(s_fMatrixRM, s_fRotationXYZ, s_fAngle);
+				SetMatrixToRotation(s_fMatrixCM, s_fRotationXYZ, s_fAngle);
 				break;
 
 			//Scaling and Skewing 
 			case 2:
-				SetMatrixToScale(s_fMatrixRM, s_fScalefactor);
+				SetMatrixToScale(s_fMatrixCM, s_fScalefactor);
 				break;
 
 			//Translation
 			case 3:
-				SetMatrixToTranslation(s_fMatrixRM, s_fTranslation);
+				SetMatrixToTranslation(s_fMatrixCM, s_fTranslation);
 				break;
 
 			default:
@@ -973,8 +986,22 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 ;;			}
 
 
+
+			//Transposing the matrix
+
+
+			//Create transposed matrix
+			for (int i = 0; i < 4; ++i)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					s_fMatrixRM[i][j] = s_fMatrixCM[j][i];
+				}
+			}
+
+
 			//Output
-			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
+			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixCM, s_fMatrixRM);
 
 			break;
 		}
