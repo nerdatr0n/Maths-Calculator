@@ -958,7 +958,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 				SetMatrixToRotation(s_fMatrixRM, s_fRotationXYZ, s_fAngle);
 				break;
 
-			//Scaling and Skewing
+			//Scaling and Skewing 
 			case 2:
 				SetMatrixToScale(s_fMatrixRM, s_fScalefactor);
 				break;
