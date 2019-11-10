@@ -813,6 +813,18 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 				break;
 			}
 		}
+
+		for (int i = 0; i < 3; ++i)
+		{
+			s_fScalefactor[i] = 0;
+			s_fTranslation[i] = 0;
+			s_fProjection[i] = 0;
+		}
+		s_fAngle = 0;
+		s_fDistance = 0;
+
+
+		WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixCM, s_fMatrixRM);
 		break;
 	case WM_COMMAND:
 	{
@@ -1024,7 +1036,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 
 			
 
-			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixRM, s_fMatrixCM);
+			WriteToDialogBoxes(_hwnd, s_fScalefactor, s_fTranslation, s_fAngle, s_fProjection, s_fDistance, s_fMatrixCM, s_fMatrixRM);
 			break;
 		}
 

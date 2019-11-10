@@ -131,8 +131,13 @@ void SetMatrixToRotation(float _fMatrixR[4][4], int _xyz, float s_fAngle)
 void SetMatrixToProjection(float _fMatrixR[4][4], float _projection[3],  float s_fDistance)
 {
 	SetMatrixToIdentity(_fMatrixR);
+	if (s_fDistance == 0)
+	{
+		s_fDistance = 1;
+	}
 
 	float t_v = _projection[0] + _projection[1] + _projection[2] + (_projection[2] / s_fDistance);
+
 
 	_fMatrixR[0][0] *= _projection[0];
 	_fMatrixR[1][1] *= _projection[1];
