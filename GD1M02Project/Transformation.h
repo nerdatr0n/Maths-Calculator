@@ -92,7 +92,7 @@ void SetMatrixToTranslation(float _fMatrixR[4][4], float _fTranslation[3])
 	_fMatrixR[1][3] = _fTranslation[1];
 	_fMatrixR[2][3] = _fTranslation[2];
 }
-void SetMatrixToRotation(float _fMatrixR[4][4], int _xyz, float s_fAngle)
+void SetMatrixToRotation(float _fMatrixR[4][4], int _xyz, float _fAngle)
 {
 	SetMatrixToIdentity(_fMatrixR);
 
@@ -101,48 +101,45 @@ void SetMatrixToRotation(float _fMatrixR[4][4], int _xyz, float s_fAngle)
 	//x
 	case 1:
 		_fMatrixR[0][0] = 1;
-		_fMatrixR[1][1] = cos(s_fAngle);
-		_fMatrixR[1][2] = -sin(s_fAngle);
-		_fMatrixR[2][1] = sin(s_fAngle);
-		_fMatrixR[2][2] = cos(s_fAngle);
+		_fMatrixR[1][1] = cos(_fAngle);
+		_fMatrixR[1][2] = -sin(_fAngle);
+		_fMatrixR[2][1] = sin(_fAngle);
+		_fMatrixR[2][2] = cos(_fAngle);
 
 		break;
 
 	//y
 	case 2:
-		_fMatrixR[0][0] = cos(s_fAngle);
-		_fMatrixR[0][2] = sin(s_fAngle);
+		_fMatrixR[0][0] = cos(_fAngle);
+		_fMatrixR[0][2] = sin(_fAngle);
 		_fMatrixR[1][1] = 1;
-		_fMatrixR[2][0] = -sin(s_fAngle);
-		_fMatrixR[2][2] = cos(s_fAngle);
+		_fMatrixR[2][0] = -sin(_fAngle);
+		_fMatrixR[2][2] = cos(_fAngle);
 		
 		break;
 
 	//z
 	case 3:
-		_fMatrixR[0][0] = cos(s_fAngle);
-		_fMatrixR[0][1] = -sin(s_fAngle);
-		_fMatrixR[1][0] = sin(s_fAngle);;
-		_fMatrixR[1][1] = cos(s_fAngle);
+		_fMatrixR[0][0] = cos(_fAngle);
+		_fMatrixR[0][1] = -sin(_fAngle);
+		_fMatrixR[1][0] = sin(_fAngle);;
+		_fMatrixR[1][1] = cos(_fAngle);
 
 		break;
 	}
 }
-void SetMatrixToProjection(float _fMatrixR[4][4], float _projection[3],  float s_fDistance)
+void SetMatrixToProjection(float _fMatrixR[4][4], int _iAxies,  float _fDistance)
 {
 	SetMatrixToIdentity(_fMatrixR);
-	if (s_fDistance == 0)
-	{
-		s_fDistance = 1;
-	}
+	if (_fDistance == 0)
+		_fDistance = 1;
+	
+	if (_iAxies == 0)
+		_iAxies = 1;
+	
 
-	float t_v = _projection[0] + _projection[1] + _projection[2] + (_projection[2] / s_fDistance);
 
-
-	_fMatrixR[0][0] *= _projection[0];
-	_fMatrixR[1][1] *= _projection[1];
-	_fMatrixR[2][2] *= _projection[2];
-	_fMatrixR[3][2] = t_v / s_fDistance;
+	_fMatrixR[_iAxies - 1][3] = 1 / _fDistance;
 	_fMatrixR[3][3] = 0;
 }
 
@@ -237,11 +234,6 @@ void WriteToDialogBoxes(HWND _hwnd, float _fLine1[3], float _fLine2[3], float _f
 	WriteToEditBox(_hwnd, IDC_EDIT4, _fLine2[0]);
 	WriteToEditBox(_hwnd, IDC_EDIT5, _fLine2[1]);
 	WriteToEditBox(_hwnd, IDC_EDIT6, _fLine2[2]);
-
-	// for Projection amount
-	WriteToEditBox(_hwnd, IDC_EDIT29, _fLine3[0]);
-	WriteToEditBox(_hwnd, IDC_EDIT30, _fLine3[1]);
-	WriteToEditBox(_hwnd, IDC_EDIT31, _fLine3[2]);
 	
 	// for Rotation amount	
 	WriteToEditBox(_hwnd, IDC_EDIT13, _fScalar1);

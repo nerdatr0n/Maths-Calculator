@@ -784,7 +784,8 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 	static float s_fProjectionMatrix[4][4];
 
 	static int s_fItemIndex = -1;
-	static int s_fRotationXYZ = 0;
+	static int s_iRotationXYZ = 0;
+	static int s_iProjectionXYZ = 0;
 
 	HWND items = NULL;
 
@@ -845,7 +846,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			case BN_CLICKED:
 				if (SendDlgItemMessage(_hwnd, IDC_CHECK1, BM_GETCHECK, 0, 0))
 				{
-					s_fRotationXYZ = 1;
+					s_iRotationXYZ = 1;
 
 					CheckDlgButton(_hwnd,IDC_CHECK2, FALSE);
 					CheckDlgButton(_hwnd, IDC_CHECK3, FALSE);
@@ -860,7 +861,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			case BN_CLICKED:
 				if (SendDlgItemMessage(_hwnd, IDC_CHECK2, BM_GETCHECK, 0, 0))
 				{
-					s_fRotationXYZ = 2;
+					s_iRotationXYZ = 2;
 
 					CheckDlgButton(_hwnd, IDC_CHECK1, FALSE);
 					CheckDlgButton(_hwnd, IDC_CHECK3, FALSE);
@@ -875,10 +876,56 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 			case BN_CLICKED:
 				if (SendDlgItemMessage(_hwnd, IDC_CHECK3, BM_GETCHECK, 0, 0))
 				{
-					s_fRotationXYZ = 3;
+					s_iRotationXYZ = 3;
 
 					CheckDlgButton(_hwnd, IDC_CHECK1, FALSE);
 					CheckDlgButton(_hwnd, IDC_CHECK2, FALSE);
+				}
+				break;
+			}
+			break;
+
+		//Projection Tick Boxes
+		case IDC_CHECK7:
+			switch (HIWORD(_wparam))
+			{
+			case BN_CLICKED:
+				if (SendDlgItemMessage(_hwnd, IDC_CHECK7, BM_GETCHECK, 0, 0))
+				{
+					s_iProjectionXYZ = 1;
+
+					CheckDlgButton(_hwnd, IDC_CHECK8, FALSE);
+					CheckDlgButton(_hwnd, IDC_CHECK9, FALSE);
+				}
+				break;
+			}
+			break;
+
+		case IDC_CHECK8:
+			switch (HIWORD(_wparam))
+			{
+			case BN_CLICKED:
+				if (SendDlgItemMessage(_hwnd, IDC_CHECK8, BM_GETCHECK, 0, 0))
+				{
+					s_iProjectionXYZ = 2;
+
+					CheckDlgButton(_hwnd, IDC_CHECK7, FALSE);
+					CheckDlgButton(_hwnd, IDC_CHECK9, FALSE);
+				}
+				break;
+			}
+			break;
+
+		case IDC_CHECK9:
+			switch (HIWORD(_wparam))
+			{
+			case BN_CLICKED:
+				if (SendDlgItemMessage(_hwnd, IDC_CHECK9, BM_GETCHECK, 0, 0))
+				{
+					s_iProjectionXYZ = 3;
+
+					CheckDlgButton(_hwnd, IDC_CHECK7, FALSE);
+					CheckDlgButton(_hwnd, IDC_CHECK8, FALSE);
 				}
 				break;
 			}
@@ -908,12 +955,12 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 
 			//Projection
 			case 0:
-				SetMatrixToProjection(s_fMatrixCM, s_fProjection, s_fAngle);
+				SetMatrixToProjection(s_fMatrixCM, s_iProjectionXYZ, s_fDistance);
 				break;
 
 			//Rotation
 			case 1:
-				SetMatrixToRotation(s_fMatrixCM, s_fRotationXYZ, s_fAngle);
+				SetMatrixToRotation(s_fMatrixCM, s_iRotationXYZ, s_fAngle);
 				break;
 
 			//Scaling and Skewing
@@ -975,12 +1022,12 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 
 			//Projection
 			case 0:
-				SetMatrixToProjection(s_fMatrixCM, s_fProjection, s_fAngle);
+				SetMatrixToProjection(s_fMatrixCM, s_iProjectionXYZ, s_fDistance);
 				break;
 
 			//Rotation
 			case 1:
-				SetMatrixToRotation(s_fMatrixCM, s_fRotationXYZ, s_fAngle);
+				SetMatrixToRotation(s_fMatrixCM, s_iRotationXYZ, s_fAngle);
 				break;
 
 			//Scaling and Skewing 
@@ -994,6 +1041,7 @@ BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
 				break;
 
 			default:
+				SetMatrixToIdentity(s_fMatrixCM);
 				break;
 ;;			}
 
